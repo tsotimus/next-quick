@@ -8,3 +8,27 @@ Included:
 - MongoDB via Mongoose
 - Tailwind
 - Shadcn
+- [Nuqs](https://nuqs.47ng.com/)
+- [Sonner](https://sonner.emilkowal.ski/)
+
+
+## Getting Started
+
+1. `pnpm install`
+2. Create your `.env.local` file following the `.env.example` file
+3. `pnpm dev`
+
+
+## Structure
+
+- `components/` - Re-usable React components
+- `features/` - Feature components
+- `app/` - Next.js app directory
+- `lib/` - Libraries to connect with 3rd parties (e.g S3, MongoDB)
+- `styles/` - Global styles
+
+### Adding new env variables
+
+- Add the variable to `.env.example`
+- Add the variable to `env.d.ts`
+- Add the variable to `.env.local`
