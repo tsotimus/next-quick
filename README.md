@@ -25,6 +25,9 @@ Included:
 - `features/` - Feature components
 - `app/` - Next.js app directory
 - `lib/` - Libraries to connect with 3rd parties (e.g S3, MongoDB)
+- `models/` - Mongoose models
+- `types/` - Typescript types
+- `utils/` - Utility functions, split between server and client
 - `styles/` - Global styles
 
 ### Adding new env variables
