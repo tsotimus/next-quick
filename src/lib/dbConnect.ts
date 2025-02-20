@@ -1,63 +1,34 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable no-var */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import mongoose from "mongoose";
 
-/**
- * You might need to import all the models here to ensure that they are registered with mongoose
- */
-
-
 declare global {
-  var mongoose: any; // This must be a `var` and not a `let / const`
+  var mongooseCache: { conn: mongoose.Connection | null; promise: Promise<mongoose.Connection> | null };
 }
 
-const MONGODB_URI = process.env.MONGODB_URI;
+// Ensure caching across hot reloads in development
+global.mongooseCache = global.mongooseCache || { conn: null, promise: null };
 
-if (!MONGODB_URI) {
-  throw new Error(
-    "Please define the MONGODB_URI environment variable inside .env.local"
-  );
-}
+async function dbConnect(): Promise<mongoose.Connection> {
+  if (global.mongooseCache.conn) return global.mongooseCache.conn;
 
-let cached = global.mongoose;
+  if (!global.mongooseCache.promise) {
+    if (!process.env.MONGODB_URI) {
+      throw new Error("Please define the MONGODB_URI environment variable inside .env.local");
+    }
 
-const initialiseModels = (): void => {
-  // Dummy usage to prevent tree shaking
-  const mods = [
-    //Might need to use this later
-  ]
-};
-
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
-}
-
-async function dbConnect() {
-  if (cached.conn) {
-    initialiseModels(); // Ensure models are used upon initial connection
-    return cached.conn;
-  }
-  if (!cached.promise) {
-    const opts = {
+    global.mongooseCache.promise = mongoose.connect(process.env.MONGODB_URI, {
       bufferCommands: false,
-    };
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
-      initialiseModels(); // Ensure models are used upon initial connection
-      return mongoose;
-    });
-  }
-  try {
-    cached.conn = await cached.promise;
-  } catch (e) {
-    cached.promise = null;
-    throw e;
+    }).then(mongoose => mongoose.connection);
   }
 
-  return cached.conn;
+  try {
+    global.mongooseCache.conn = await global.mongooseCache.promise;
+  } catch (error) {
+    global.mongooseCache.promise = null; // Reset cache on error
+    throw error;
+  }
+
+  return global.mongooseCache.conn;
 }
 
 export default dbConnect;
