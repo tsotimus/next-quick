@@ -7,7 +7,7 @@
 import mongoose from "mongoose";
 
 /**
- * We need to import all the models here to ensure that they are registered with mongoose
+ * You might need to import all the models here to ensure that they are registered with mongoose
  */
 
 
