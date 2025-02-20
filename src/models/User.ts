@@ -21,8 +21,8 @@ const UserSchema = new mongoose.Schema<UserModel>(
 
 
   // Create or get the Project model with proper type
-const Project: Model<UserModel> = mongoose.models.Project
-? (mongoose.models.Project as Model<UserModel>)
-: mongoose.model<UserModel>("Project", UserSchema);
+const User: Model<UserModel> = mongoose.models.User
+? (mongoose.models.User as Model<UserModel>)
+: mongoose.model<UserModel>("User", UserSchema);
 
-export default Project;
+export default User;
