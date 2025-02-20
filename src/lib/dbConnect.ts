@@ -9,9 +9,7 @@ import mongoose from "mongoose";
 /**
  * We need to import all the models here to ensure that they are registered with mongoose
  */
-import BlogPost from "@/models/BlogPost";
-import Tag from "@/models/Tag";
-import Project from "@/models/Project";
+
 
 declare global {
   var mongoose: any; // This must be a `var` and not a `let / const`
@@ -30,9 +28,7 @@ let cached = global.mongoose;
 const initialiseModels = (): void => {
   // Dummy usage to prevent tree shaking
   const mods = [
-    BlogPost.modelName,
-    Tag.modelName,
-    Project.modelName
+    //Might need to use this later
   ]
 };
 
