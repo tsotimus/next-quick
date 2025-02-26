@@ -1,4 +1,4 @@
-import {type  NextConfig } from "next";
+import { NextConfig } from "next";
 
 const generateConfig = async () => {
   const IS_UNDER_CONSTRUCTION = process.env.IS_UNDER_CONSTRUCTION === "true";
