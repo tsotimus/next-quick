@@ -8,8 +8,18 @@ declare global {
 // Ensure caching across hot reloads in development
 global.mongooseCache = global.mongooseCache || { conn: null, promise: null };
 
+// const initialiseModels = (): void => {
+//   // Dummy usage to prevent tree shaking
+//   const mods = [
+//     //Might need to pass in models here
+//   ]
+// };
+
 async function dbConnect(): Promise<mongoose.Connection> {
-  if (global.mongooseCache.conn) return global.mongooseCache.conn;
+  if (global.mongooseCache.conn){
+    // initialiseModels(); // Ensure models are used upon initial connection
+    return global.mongooseCache.conn;
+  }
 
   if (!global.mongooseCache.promise) {
     if (!process.env.MONGODB_URI) {
@@ -17,8 +27,11 @@ async function dbConnect(): Promise<mongoose.Connection> {
     }
 
     global.mongooseCache.promise = mongoose.connect(process.env.MONGODB_URI, {
-      bufferCommands: false,
-    }).then(mongoose => mongoose.connection);
+        bufferCommands: false,
+    }).then(mongoose => {
+      // initialiseModels(); // Ensure models are used upon initial connection
+      return mongoose.connection
+    });
   }
 
   try {
