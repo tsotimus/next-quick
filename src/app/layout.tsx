@@ -3,10 +3,10 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import "@/styles/globals.css";
-import { cn } from "@/lib/utils";
 import { type Metadata } from "next";
 import { type ReactNode } from "react";
 import Providers from "@/components/Providers";
+import { cn } from "@/utils/client/cn";
 
 
 
