@@ -16,8 +16,9 @@ Included:
 
 1. `pnpm install`
 2. Create your `.env.local` file following the `.env.example` file
-3. `pnpm dev`
-4. (Recommended) Use [MongoDB Compass](https://www.mongodb.com/products/tools/compass) when developing locally
+3. `docker compose up -d`
+4. `pnpm dev`
+5. (Recommended) Use [MongoDB Compass](https://www.mongodb.com/products/tools/compass) when developing locally
 
 
 ## Structure
